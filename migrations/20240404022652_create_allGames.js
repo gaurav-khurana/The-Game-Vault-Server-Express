@@ -17,11 +17,11 @@ exports.up = function (knex) {
     table.string("players").notNullable();
     table.string("online_play").notNullable();
     table.string("ratings").notNullable();
-    table.string("image1", 100).notNullable();
-    table.string("image2", 100).notNullable();
-    table.string("image3", 100).notNullable();
-    table.string("image4", 100).notNullable();
-    table.string("image5", 100).notNullable();
+    table.string("image1", 255).notNullable();
+    table.string("image2", 255).notNullable();
+    table.string("image3", 255).notNullable();
+    table.string("image4", 255).notNullable();
+    table.string("image5", 255).notNullable();
     table.timestamp("created_at").defaultTo(knex.fn.now());
     table
       .timestamp("updated_at")
