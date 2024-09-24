@@ -30,7 +30,7 @@ Hence, "The Game Vault" platform which lets you decide if you want to rent the g
 ## Tech Stack
 
 - React
-- MySQL / SQLite
+- JavaScript
 - Express
 - Heroku
 - Client libraries:
@@ -44,11 +44,11 @@ Hence, "The Game Vault" platform which lets you decide if you want to rent the g
   - material-ui
 - Server libraries:
   - node
-  - knex
   - express
   - uniqid
   - cors
   - dotenv
+- Data Source: JSON files
 
 ## APIs
 
@@ -88,10 +88,6 @@ No external API's will be used for "The Game Vault"
 Data would be in form of 2 different tables i.e Xbox games table & Playstation games table.
 
 ![Data and relationship drawing](./Data%20&%20relationship.png)
-
-> TO BE DECIDED
-> They may not have any relationship with one another, or may need a junction table.
-> May need Extra customer details table which will be seeded by customer details from checkout page
 
 ## Endpoints
 
@@ -177,7 +173,7 @@ Sample Response:
     }
 ```
 
-**GET /allgames** // To be decided //
+**GET /allgames**
 
 - get all xbox & playstation games
 
@@ -217,13 +213,9 @@ Auth may be a nice to have feature
 
   - express project with routing, with placeholder 200 responses
 
-- Create migrations
+- Create JSON file for data for xbox & playstation games
 
-- Create 2 migrations for tables for xbox & playstation
-
-- Create seeds database with xbox & playstation data
-
-- Check database functionality using Postman
+- Check and validate API Endpoints using Postman
 
 - Deploy client and server projects so all commits will be reflected in production
 
@@ -265,14 +257,3 @@ Auth may be a nice to have feature
   - Navigate back to Homepage
 
 - Bug fixes
-
-- DEMO DAY
-
-## Nice-to-haves
-
-```
-> Auth - User Login Page
-> Landing  page - 360 rotating animation
-> POST methods to post all customer details to endpoint & GET method to all customer details to render on Order Confirmation Page
-> Page to track order status
-```
