@@ -1,17 +1,30 @@
-const knex = require("knex")(require("../knexfile"));
+const fs = require("fs");
 
 // controller to GET All Xbox Games
 
-async function getAllXboxGames(req, res) {
-  try {
-    const response = await knex("allgames").where({
-      platform: "Xbox One  Xbox Series X | S",
-    });
-    console.log(response);
+// async function getAllXboxGames(req, res) {
+//   try {
+//     const response = await knex("allgames").where({
+//       platform: "Xbox One  Xbox Series X | S",
+//     });
+//     console.log(response);
 
-    res.status(200).json(response);
+//     res.status(200).json(response);
+//   } catch (error) {
+//     res.status(400).json({ message: "Cannot get all xbox games" });
+//   }
+// }
+
+function getAllXboxGames(_req, res) {
+  try {
+    const allXboxGames = fs.readFileSync("./data/xbox-ps-games.json");
+    const allXboxGamesParsed = JSON.parse(allXboxGames);
+    console.log(allXboxGamesParsed);
+    return res
+      .status(200)
+      .json(allXboxGamesParsed.filter((game) => game.id >= 1 && game.id <= 10));
   } catch (error) {
-    res.status(400).json({ message: "Cannot get all xbox games" });
+    console.log(error);
   }
 }
 
