@@ -2,28 +2,19 @@ const fs = require("fs");
 
 // controller to GET All Xbox Games
 
-// async function getAllXboxGames(req, res) {
-//   try {
-//     const response = await knex("allgames").where({
-//       platform: "Xbox One  Xbox Series X | S",
-//     });
-//     console.log(response);
-
-//     res.status(200).json(response);
-//   } catch (error) {
-//     res.status(400).json({ message: "Cannot get all xbox games" });
-//   }
-// }
-
-function getAllXboxGames(_req, res) {
+async function getAllXboxGames(_req, res) {
   try {
-    const allXboxGames = fs.readFileSync("./data/xbox-ps-games.json");
+    const allXboxGames = await fs.readFileSync("./data/xbox-ps-games.json");
+
     const allXboxGamesParsed = JSON.parse(allXboxGames);
-    console.log(allXboxGamesParsed);
-    return res
-      .status(200)
-      .json(allXboxGamesParsed.filter((game) => game.id >= 1 && game.id <= 10));
+
+    const onlyXboxGames = allXboxGamesParsed.filter(
+      (game) => game.id >= 1 && game.id <= 10
+    );
+
+    return res.status(200).json(onlyXboxGames);
   } catch (error) {
+    res.status(500).json({ message: "Cant retrieve xbox games" });
     console.log(error);
   }
 }
@@ -32,37 +23,45 @@ function getAllXboxGames(_req, res) {
 
 const singleXboxGame = async (req, res) => {
   try {
-    const singleXboxGame = await knex("allgames").where({
-      platform: "Xbox One  Xbox Series X | S",
-      id: req.params.id,
+    const gameId = req.params.id;
+
+    const allXboxGames = await fs.readFileSync("./data/xbox-ps-games.json");
+
+    const allXboxGamesParsed = JSON.parse(allXboxGames);
+
+    const onlyXboxGames = allXboxGamesParsed.filter(
+      (game) => game.id >= 1 && game.id <= 10
+    );
+
+    const singleXboxGameData = onlyXboxGames.find((game) => {
+      if (game.id == gameId) {
+        return game;
+      }
     });
 
-    if (singleXboxGame.length === 0) {
-      return res.status(404).json({
-        message: `Xbox game with id ${req.params.id} does not exist`,
-      });
-    }
-
-    const singleXboxGameData = singleXboxGame[0];
-
-    res.status(200).json(singleXboxGameData);
+    return res.status(200).json(singleXboxGameData);
   } catch (error) {
     res
       .status(500)
-      .json({ message: `Cannot get xbox game with id ${req.params.id}` });
+      .json({ message: `Cant get xbox game data with id ${req.params.id}` });
+    console.log(error.message);
   }
 };
 
 // controller to Get All PS Games
 
-const getAllPsGames = async (req, res) => {
+const getAllPsGames = (_req, res) => {
   try {
-    const response = await knex("allgames").where({ platform: "PS4 PS5" });
-    console.log(response);
+    const allPSGames = fs.readFileSync("./data/xbox-ps-games.json");
 
-    res.status(200).json(response);
+    const allPSGamesParsed = JSON.parse(allPSGames);
+
+    return res
+      .status(200)
+      .json(allPSGamesParsed.filter((game) => game.id > 10 && game.id <= 20));
   } catch (error) {
-    res.status(400).json({ message: "Can't get all PS5 games" });
+    res.status(500).json({ message: "Cant retrieve PS games" });
+    console.log(error);
   }
 };
 
@@ -70,20 +69,23 @@ const getAllPsGames = async (req, res) => {
 
 const getSinglePsGame = async (req, res) => {
   try {
-    const singlePsGame = await knex("allgames").where({
-      platform: "PS4 PS5",
-      id: req.params.id,
+    const gameId = req.params.id;
+
+    const allPSGames = await fs.readFileSync("./data/xbox-ps-games.json");
+
+    const allPSGamesParsed = JSON.parse(allPSGames);
+
+    const onlyPSGames = allPSGamesParsed.filter(
+      (game) => game.id >= 10 && game.id <= 20
+    );
+
+    const singlePSGameData = onlyPSGames.find((game) => {
+      if (game.id == gameId) {
+        return game;
+      }
     });
 
-    if (singlePsGame.length === 0) {
-      return res.status(404).json({
-        message: `Playstation game with id ${req.params.id} does not exist`,
-      });
-    }
-
-    const getSinglePsGameData = singlePsGame[0];
-
-    res.status(200).json(getSinglePsGameData);
+    return res.status(200).json(singlePSGameData);
   } catch (error) {
     res.status(500).json({
       message: `Cannot get playstation game with id ${req.params.id}`,
