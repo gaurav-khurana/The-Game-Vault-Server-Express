@@ -18,9 +18,12 @@ app.use("/static-files", express.static("public"));
 
 // routes - xbox & PS games
 const xboxPsRoutes = require("./routes/routes-xbox-ps");
+const ServerlessHttp = require("serverless-http");
 app.use("/games", xboxPsRoutes);
 
 // listen to Port
 app.listen(PORT, () => {
   console.log("Listening to server on ", PORT);
 });
+
+export const handler = ServerlessHttp(app);

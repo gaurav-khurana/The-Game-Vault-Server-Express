@@ -3,6 +3,12 @@
   node_bundler = "esbuild"
 [[redirects]]
   force = true
-  from = "/games/*"
+  from = "/*"
   status = 200
   to = "/.netlify/functions/api/:splat"
+
+[build]
+  functions = "functions"
+
+[dev]
+  publish = "dist"
