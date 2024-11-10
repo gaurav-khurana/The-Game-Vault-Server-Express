@@ -20,7 +20,10 @@ server.use("/static-files", express.static("public"));
 
 // routes - xbox & PS games
 // const xboxPsRoutes = require("../routes/routes-xbox-ps");
-server.use(".netlify/functions/games", router);
+// server.use(".netlify/functions/games", router);
+server.get(".netlify/functions/games", (req, res) =>
+  res.json({ message: "All xbox games are here" })
+);
 
 // listen to Port
 server.listen(PORT, () => {
