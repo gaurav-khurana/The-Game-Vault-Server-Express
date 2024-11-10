@@ -2,11 +2,6 @@
   external_node_modules = ["express"]
   node_bundler = "esbuild"
 
-[[redirects]]
-  force = true
-  from = "/*"
-  status = 200
-  to = "/.netlify/functions/games/:splat"
 
 [build]
   functions = "functions"

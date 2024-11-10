@@ -1,33 +1,32 @@
-import router from "../routes/routes-xbox-ps";
-
 const express = require("express");
-const app = express();
+const server = express();
 const cors = require("cors");
 require("dotenv").config();
+import router from "../routes/routes-xbox-ps";
+const ServerlessHttp = require("serverless-http");
 
 const { PORT } = process.env;
 
 // middleware for cors
-app.use(cors());
+server.use(cors());
 
 // middleware for json format
-app.use(express.json());
+server.use(express.json());
 
 // middleware for generating token
 
 // serve static files from server
-app.use("/static-files", express.static("public"));
+server.use("/static-files", express.static("public"));
 
 // routes - xbox & PS games
 // const xboxPsRoutes = require("../routes/routes-xbox-ps");
-const ServerlessHttp = require("serverless-http");
-app.use("/games", router);
+server.use(".netlify/functions/games", router);
 
 // listen to Port
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log("Listening to server on ", PORT);
 });
 
-export const handler = ServerlessHttp(app);
+export const handler = ServerlessHttp(server);
 
 // /* /index.html 200
