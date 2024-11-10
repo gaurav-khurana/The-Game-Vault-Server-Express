@@ -1,3 +1,5 @@
+import router from "../routes/routes-xbox-ps";
+
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -17,9 +19,9 @@ app.use(express.json());
 app.use("/static-files", express.static("public"));
 
 // routes - xbox & PS games
-const xboxPsRoutes = require("./routes/routes-xbox-ps");
+// const xboxPsRoutes = require("../routes/routes-xbox-ps");
 const ServerlessHttp = require("serverless-http");
-app.use("/games", xboxPsRoutes);
+app.use("/games", router);
 
 // listen to Port
 app.listen(PORT, () => {
