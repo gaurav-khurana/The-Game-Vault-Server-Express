@@ -30,4 +30,4 @@ app.listen(PORT, () => {
 
 export const handler = ServerlessHttp(app);
 
-// to = "/.netlify/functions/api/:splat"
+// /* /index.html 200
